@@ -1,24 +1,38 @@
-// TODO: write your code here
-import sum from './basic';
-
-console.log('worked');
-
-console.log(sum([1, 2]));
-
-export default function orderByProps(object, arr) {
-  const objFirst = [];
-  const objSecond = [];
-
-  for (const key in object) {
-    if (arr.includes(key)) {
-      objFirst.push({ key, value: object[key] });
-    } else {
-      objSecond.push({ key, value: object[key] });
-    }
-  }
-
-  objFirst.sort((a, b) => arr.indexOf(a.key) - arr.indexOf(b.key));
-  objSecond.sort((a, b) => (a.key > b.key ? 1 : -1));
-
-  return [...objFirst, ...objSecond];
+const character = {
+    name: 'Лучник',
+    type: 'Bowman',
+    health: 50,
+    level: 3,
+    attack: 40,
+    defence: 10,
+    special: [
+      {
+        id: 8,
+        name: 'Двойной выстрел',
+        icon: 'http://...',
+        description: 'Двойной выстрел наносит двойной урон'
+      }, 
+      {
+        id: 9,
+        name: 'Нокаутирующий удар',
+        icon: 'http://...'
+        // <- обратите внимание, описание "засекречено"
+      }
+    ] 
 }
+
+export default function destruction(special) {
+    const result = new Array();
+    for(const i of special) {
+        const {id, name, icon, description = 'Описание не доступно'} = i;
+        result.push({
+            id: id,
+            name: name,
+            icon: icon,
+            description: description
+        })
+    }
+    return result
+}
+
+console.log(destruction(character.special))

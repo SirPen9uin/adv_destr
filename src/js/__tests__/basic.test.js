@@ -1,34 +1,73 @@
-import sum from '../basic';
-import orderByProps from '../app';
+import destruction from '../app';
 
-test('should sum', () => {
-  const result = sum([1, 2, 3]);
+describe('destruction function', () => {
+    const data = [
+        ['С полным описание', 
+            [
+                {
+                    id: 8,
+                    name: 'Двойной выстрел',
+                    icon: 'http://...',
+                    description: 'Двойной выстрел наносит двойной урон'
+                }, 
+                {
+                    id: 9,
+                    name: 'Нокаутирующий удар',
+                    icon: 'http://...',
+                    description: 'K.O.'
+                }
+            ], 
+            [
+                {
+                    id: 8,
+                    name: 'Двойной выстрел',
+                    icon: 'http://...',
+                    description: 'Двойной выстрел наносит двойной урон'
+                }, 
+                {
+                    id: 9,
+                    name: 'Нокаутирующий удар',
+                    icon: 'http://...',
+                    description: 'K.O.'
+                }
+            ]
+        ],
+        ['С скрытым описанием', 
+            [
+                {
+                    id: 8,
+                    name: 'Двойной выстрел',
+                    icon: 'http://...',
+                    description: 'Двойной выстрел наносит двойной урон'
+                }, 
+                {
+                    id: 9,
+                    name: 'Нокаутирующий удар',
+                    icon: 'http://...'
+                }
+            ],
+            [
+                {
+                    id: 8,
+                    name: 'Двойной выстрел',
+                    icon: 'http://...',
+                    description: 'Двойной выстрел наносит двойной урон'
+                }, 
+                {
+                    id: 9,
+                    name: 'Нокаутирующий удар',
+                    icon: 'http://...',
+                    description: 'Описание не доступно'
+                }
+            ]
+        ],
+        ['Отсутствие способностей', [], []]
+    ]
 
-  expect(result).toBe(6);
-});
-
-test('sorting', () => {
-  const obj = {
-    name: 'мечник', health: 10, level: 2, attack: 80, defence: 40,
-  };
-  expect(orderByProps(obj, ['name', 'level', 'beard'])).toEqual([
-    { key: 'name', value: 'мечник' },
-    { key: 'level', value: 2 },
-    { key: 'attack', value: 80 },
-    { key: 'defence', value: 40 },
-    { key: 'health', value: 10 },
-  ]);
-});
-
-test('sorting with an empty array', () => {
-  const obj = {
-    name: 'мечник', health: 10, level: 2, attack: 80, defence: 40,
-  };
-  expect(orderByProps(obj, [])).toEqual([
-    { key: 'attack', value: 80 },
-    { key: 'defence', value: 40 },
-    { key: 'health', value: 10 },
-    { key: 'level', value: 2 },
-    { key: 'name', value: 'мечник' },
-  ]);
+  data.forEach(([desc, value, result]) => {
+    test(`should return the expected result for ${desc}`, () => {
+      const func = destruction(value);
+      expect(func).toEqual(result);
+    });
+  });
 });
